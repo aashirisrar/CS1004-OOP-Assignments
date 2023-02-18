@@ -117,6 +117,8 @@ int main()
 
     /* Interchanging Rows */
     InterchangeRows(matrixOne, rowColSizeArr[0][0], rowColSizeArr[0][1]);
+    cout << "After interchanging matrix A: " << endl;
+    OutputMatrix(matrixOne, rowColSizeArr[0][0], rowColSizeArr[0][1]);
 
     return 0;
 }
@@ -276,8 +278,24 @@ bool IsSymmetric(int **matrix, const int &ROWS, const int &COLS)
 
 void InterchangeRows(int **matrix, const int &ROWS, const int &COLS)
 {
+    int *row1 = new int;
+    int *row2 = new int;
+
+    cout << "row1: ";
+    cin >> *row1;
+
+    cout << "row2: ";
+    cin >> *row2;
+
+    int *temp = matrix[*row1 - 1];
+    matrix[*row1 - 1] = matrix[*row2 - 1];
+    matrix[*row2 - 1] = temp;
+
+    // InterchangeRows(row1, row2);
 }
 
 void InterchangeRows(int *&row1, int *&row2)
 {
 }
+
+/* Add error code on symmetric that a matrix with same row and col size can be symmetric only */
