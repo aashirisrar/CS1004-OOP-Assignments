@@ -51,9 +51,46 @@ int main()
     OutputMatrix(matrixThree, rowColSizeArr[2][0], rowColSizeArr[2][1]);
 
     /* Adding Matrices */
-    int **addedMatrix = AddMatrix(matrixOne, matrixTwo, rowColSizeArr[0][0], rowColSizeArr[0][1]);
-    cout << "Added Matrix:" << endl;
-    OutputMatrix(addedMatrix, rowColSizeArr[0][0], rowColSizeArr[0][1]);
+    // A+B
+    if (rowColSizeArr[0][0] == rowColSizeArr[1][0] && rowColSizeArr[0][1] == rowColSizeArr[1][1])
+    {
+        int **addedMatrixAB = AddMatrix(matrixOne, matrixTwo, rowColSizeArr[0][0], rowColSizeArr[0][1]);
+        cout << "Added Matrix (A+B):" << endl;
+        OutputMatrix(addedMatrixAB, rowColSizeArr[0][0], rowColSizeArr[0][1]);
+    }
+    else
+    {
+        cout << "Addition is not possible!";
+    }
+
+    // A+C
+    if (rowColSizeArr[0][0] == rowColSizeArr[2][0] && rowColSizeArr[1][1] == rowColSizeArr[2][1])
+    {
+        int **addedMatrixAC = AddMatrix(matrixOne, matrixTwo, rowColSizeArr[0][0], rowColSizeArr[0][1]);
+        cout << "Added Matrix (A+C):" << endl;
+        OutputMatrix(addedMatrixAC, rowColSizeArr[2][0], rowColSizeArr[2][1]);
+    }
+    else
+    {
+        cout << "A+C= " << endl;
+        cout << "Addition is not possible" << endl;
+    }
+
+    /* Transpose of Matrix */
+    // A
+    // int **transposeOfA = TransposeMatrix(matrixOne, rowColSizeArr[0][0], rowColSizeArr[0][1]);
+    // cout << "Transpose of A:" << endl;
+    // OutputMatrix(transposeOfA, rowColSizeArr[0][0], rowColSizeArr[0][1]);
+
+    // // B
+    // int **transposeOfB = TransposeMatrix(matrixTwo, rowColSizeArr[1][0], rowColSizeArr[1][1]);
+    // cout << "Transpose of B:" << endl;
+    // OutputMatrix(transposeOfB, rowColSizeArr[1][0], rowColSizeArr[1][1]);
+
+    // C
+    int **transposeOfC = TransposeMatrix(matrixThree, rowColSizeArr[2][0], rowColSizeArr[2][1]);
+    cout << "Transpose of C:" << endl;
+    OutputMatrix(transposeOfC, rowColSizeArr[2][1], rowColSizeArr[2][0]);
 
     return 0;
 }
@@ -139,6 +176,44 @@ int **AddMatrix(int **matrixA, int **matrixB, const int &ROWS, const int &COLS)
             addedMatrix[i][j] = matrixA[i][j] + matrixB[i][j];
         }
     }
-
     return addedMatrix;
+}
+
+int **TransposeMatrix(int **matrix, const int &ROWS, const int &COLS)
+{
+    if (ROWS == COLS)
+    {
+        int **transposeMatrix = new int *[ROWS];
+        for (int i = 0; i < ROWS; i++)
+        {
+            transposeMatrix[i] = new int[COLS];
+        }
+
+        for (int i = 0; i < ROWS; i++)
+        {
+            for (int j = 0; j < COLS; j++)
+            {
+                transposeMatrix[i][j] = matrix[j][i];
+            }
+        }
+        return transposeMatrix;
+    }
+    else
+    {
+        int **transposeMatrix = new int *[COLS];
+        for (int i = 0; i < COLS; i++)
+        {
+            transposeMatrix[i] = new int[ROWS];
+        }
+
+        for (int i = 0; i < COLS; i++)
+        {
+            for (int j = 0; j < ROWS; j++)
+            {
+                transposeMatrix[i][j] = matrix[j][i];
+            }
+        }
+        return transposeMatrix;
+    }
+    return 0;
 }
