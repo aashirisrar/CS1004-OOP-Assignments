@@ -26,44 +26,20 @@ int main()
 
     inputFile.open("InputFile.txt");
 
+    // Matrix One Input
     int **matrixOne = InputMatrix(inputFile, rows, cols);
     rowColSizeArr[0][0] = rows;
     rowColSizeArr[0][1] = cols;
 
-    for (int i = 0; i < rowColSizeArr[0][0]; i++)
-    {
-        for (int j = 0; j < rowColSizeArr[0][1]; j++)
-        {
-            cout << matrixOne[i][j] << " ";
-        }
-        cout << endl;
-    }
-
+    // Matrix Two Input
     int **matrixTwo = InputMatrix(inputFile, rows, cols);
     rowColSizeArr[1][0] = rows;
     rowColSizeArr[1][1] = cols;
 
-    for (int i = 0; i < rowColSizeArr[1][0]; i++)
-    {
-        for (int j = 0; j < rowColSizeArr[1][1]; j++)
-        {
-            cout << matrixTwo[i][j] << " ";
-        }
-        cout << endl;
-    }
-
+    // Matrix Three Input
     int **matrixThree = InputMatrix(inputFile, rows, cols);
     rowColSizeArr[2][0] = rows;
     rowColSizeArr[2][1] = cols;
-
-    for (int i = 0; i < rowColSizeArr[2][0]; i++)
-    {
-        for (int j = 0; j < rowColSizeArr[2][1]; j++)
-        {
-            cout << matrixThree[i][j] << " ";
-        }
-        cout << endl;
-    }
 
     return 0;
 }
