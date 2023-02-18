@@ -40,7 +40,7 @@ int main()
     rowColSizeArr[1][1] = cols;
 
     cout << "Matrix Two:" << endl;
-    OutputMatrix(matrixTwo, rowColSizeArr[0][0], rowColSizeArr[0][1]);
+    OutputMatrix(matrixTwo, rowColSizeArr[1][0], rowColSizeArr[1][1]);
 
     // Matrix Three Input
     int **matrixThree = InputMatrix(inputFile, rows, cols);
@@ -48,7 +48,12 @@ int main()
     rowColSizeArr[2][1] = cols;
 
     cout << "Matrix Three:" << endl;
-    OutputMatrix(matrixThree, rowColSizeArr[0][0], rowColSizeArr[0][1]);
+    OutputMatrix(matrixThree, rowColSizeArr[2][0], rowColSizeArr[2][1]);
+
+    /* Adding Matrices */
+    int **addedMatrix = AddMatrix(matrixOne, matrixTwo, rowColSizeArr[0][0], rowColSizeArr[0][1]);
+    cout << "Added Matrix:" << endl;
+    OutputMatrix(addedMatrix, rowColSizeArr[0][0], rowColSizeArr[0][1]);
 
     return 0;
 }
@@ -99,4 +104,23 @@ void OutputMatrix(int **matrix, const int &ROWS, const int &COLS)
         cout << endl;
     }
     cout << endl;
+}
+
+int **AddMatrix(int **matrixA, int **matrixB, const int &ROWS, const int &COLS)
+{
+    int **addedMatrix = new int *[ROWS];
+    for (int i = 0; i < ROWS; i++)
+    {
+        addedMatrix[i] = new int[COLS];
+    }
+
+    for (int i = 0; i < ROWS; i++)
+    {
+        for (int j = 0; j < COLS; j++)
+        {
+            addedMatrix[i][j] = matrixA[i][j] + matrixB[i][j];
+        }
+    }
+
+    return addedMatrix;
 }
