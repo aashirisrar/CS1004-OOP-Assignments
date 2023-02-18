@@ -115,6 +115,9 @@ int main()
         cout << "Matrix B is NOT symmetric" << endl;
     }
 
+    // C
+    cout << "Matrix C is NOT symmetric as its row and column sizes are not same!" << endl;
+
     /* Interchanging Rows */
     InterchangeRows(matrixOne, rowColSizeArr[0][0], rowColSizeArr[0][1]);
     cout << "After interchanging matrix A: " << endl;
@@ -289,7 +292,15 @@ void InterchangeRows(int **matrix, const int &ROWS, const int &COLS)
     cin >> row2;
     row2--;
 
-    InterchangeRows(matrix[row1], matrix[row2]);
+    if (row1 > 0 && row2 < ROWS)
+    {
+        InterchangeRows(matrix[row1], matrix[row2]);
+    }
+    else
+    {
+        cout << "Error! The row number must be between 0 and " << ROWS + 1 << endl;
+        exit(0);
+    }
 }
 
 void InterchangeRows(int *&row1, int *&row2)
