@@ -26,6 +26,7 @@ int main()
 
     inputFile.open("InputFile.txt");
 
+    /* Matrix Input */
     // Matrix One Input
     int **matrixOne = InputMatrix(inputFile, rows, cols);
     rowColSizeArr[0][0] = rows;
@@ -309,5 +310,3 @@ void InterchangeRows(int *&row1, int *&row2)
     row1 = row2;
     row2 = temp;
 }
-
-/* Add error code on symmetric that a matrix with same row and col size can be symmetric only */
