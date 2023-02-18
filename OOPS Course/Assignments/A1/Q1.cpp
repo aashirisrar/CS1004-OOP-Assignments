@@ -84,7 +84,25 @@ int **InputMatrix(ifstream &fin, int &rows, int &cols)
                 for (int j = 0; j < cols; j++)
                 {
                     inputArr[i][j] = arr[k] - 48;
-                    k += 2;
+
+                    if (arr[k + 1] == ' ' || arr[k + 1] == '\000')
+                    {
+                        k += 2;
+                    }
+                    else
+                    {
+                        int count = 0;
+                        int num = 0;
+
+                        for (int l = k; arr[l] != ' ' && arr[l] != '\000'; l++)
+                        {
+                            int temp = arr[l] - 48;
+                            num = (num * 10) + temp;
+                            count++;
+                        }
+                        inputArr[i][j] = num;
+                        k += count;
+                    }
                 }
             }
             return inputArr;
