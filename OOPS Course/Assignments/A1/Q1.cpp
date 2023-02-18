@@ -278,24 +278,25 @@ bool IsSymmetric(int **matrix, const int &ROWS, const int &COLS)
 
 void InterchangeRows(int **matrix, const int &ROWS, const int &COLS)
 {
-    int *row1 = new int;
-    int *row2 = new int;
+    int row1;
+    int row2;
 
     cout << "row1: ";
-    cin >> *row1;
+    cin >> row1;
+    row1--;
 
     cout << "row2: ";
-    cin >> *row2;
+    cin >> row2;
+    row2--;
 
-    int *temp = matrix[*row1 - 1];
-    matrix[*row1 - 1] = matrix[*row2 - 1];
-    matrix[*row2 - 1] = temp;
-
-    // InterchangeRows(row1, row2);
+    InterchangeRows(matrix[row1], matrix[row2]);
 }
 
 void InterchangeRows(int *&row1, int *&row2)
 {
+    int *temp = row1;
+    row1 = row2;
+    row2 = temp;
 }
 
 /* Add error code on symmetric that a matrix with same row and col size can be symmetric only */
