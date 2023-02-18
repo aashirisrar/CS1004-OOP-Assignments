@@ -15,7 +15,7 @@ int main()
     ifstream inputFile;
     int rows = 0;
     int cols = 0;
-    int matrixRows = 1;
+    int matrixRows = 3;
     int matrixCols = 2;
     int **rowColSizeArr = new int *[matrixRows];
 
@@ -27,7 +27,6 @@ int main()
     inputFile.open("InputFile.txt");
 
     int **matrixOne = InputMatrix(inputFile, rows, cols);
-    matrixRows++;
     rowColSizeArr[0][0] = rows;
     rowColSizeArr[0][1] = cols;
 
@@ -41,10 +40,12 @@ int main()
     }
 
     int **matrixTwo = InputMatrix(inputFile, rows, cols);
+    rowColSizeArr[1][0] = rows;
+    rowColSizeArr[1][1] = cols;
 
-    for (int i = 0; i < rows; i++)
+    for (int i = 0; i < rowColSizeArr[1][0]; i++)
     {
-        for (int j = 0; j < cols; j++)
+        for (int j = 0; j < rowColSizeArr[1][1]; j++)
         {
             cout << matrixTwo[i][j] << " ";
         }
@@ -52,9 +53,12 @@ int main()
     }
 
     int **matrixThree = InputMatrix(inputFile, rows, cols);
-    for (int i = 0; i < rows; i++)
+    rowColSizeArr[2][0] = rows;
+    rowColSizeArr[2][1] = cols;
+
+    for (int i = 0; i < rowColSizeArr[2][0]; i++)
     {
-        for (int j = 0; j < cols; j++)
+        for (int j = 0; j < rowColSizeArr[2][1]; j++)
         {
             cout << matrixThree[i][j] << " ";
         }
