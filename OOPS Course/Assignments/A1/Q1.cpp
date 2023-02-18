@@ -116,6 +116,7 @@ int main()
     }
 
     /* Interchanging Rows */
+    InterchangeRows(matrixOne, rowColSizeArr[0][0], rowColSizeArr[0][1]);
 
     return 0;
 }
@@ -271,4 +272,12 @@ bool IsSymmetric(int **matrix, const int &ROWS, const int &COLS)
     }
 
     return 0;
+}
+
+void InterchangeRows(int **matrix, const int &ROWS, const int &COLS)
+{
+}
+
+void InterchangeRows(int *&row1, int *&row2)
+{
 }
