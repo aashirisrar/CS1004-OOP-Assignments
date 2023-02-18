@@ -31,15 +31,24 @@ int main()
     rowColSizeArr[0][0] = rows;
     rowColSizeArr[0][1] = cols;
 
+    cout << "Matrix One:" << endl;
+    OutputMatrix(matrixOne, rowColSizeArr[0][0], rowColSizeArr[0][1]);
+
     // Matrix Two Input
     int **matrixTwo = InputMatrix(inputFile, rows, cols);
     rowColSizeArr[1][0] = rows;
     rowColSizeArr[1][1] = cols;
 
+    cout << "Matrix Two:" << endl;
+    OutputMatrix(matrixTwo, rowColSizeArr[0][0], rowColSizeArr[0][1]);
+
     // Matrix Three Input
     int **matrixThree = InputMatrix(inputFile, rows, cols);
     rowColSizeArr[2][0] = rows;
     rowColSizeArr[2][1] = cols;
+
+    cout << "Matrix Three:" << endl;
+    OutputMatrix(matrixThree, rowColSizeArr[0][0], rowColSizeArr[0][1]);
 
     return 0;
 }
@@ -77,4 +86,17 @@ int **InputMatrix(ifstream &fin, int &rows, int &cols)
         }
     }
     return 0;
+}
+
+void OutputMatrix(int **matrix, const int &ROWS, const int &COLS)
+{
+    for (int i = 0; i < ROWS; i++)
+    {
+        for (int j = 0; j < COLS; j++)
+        {
+            cout << matrix[i][j] << " ";
+        }
+        cout << endl;
+    }
+    cout << endl;
 }
