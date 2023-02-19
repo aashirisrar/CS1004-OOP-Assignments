@@ -205,16 +205,18 @@ int main()
 
 int **InputMatrix(ifstream &fin, int &rows, int &cols)
 {
-    int **inputArr = new int *[rows];
+    int **inputArr = 0;
     char arr[100] = {};
     while (!fin.eof())
     {
         fin.getline(arr, 100);
 
-        if (arr[0] != '/' && arr[0] != '\000')
+        if (arr[0] != '/' && arr[0] != '\0')
         {
             rows = arr[0] - 48;
             cols = arr[2] - 48;
+
+            inputArr = new int *[rows];
 
             for (int i = 0; i < rows; i++)
             {
