@@ -66,6 +66,7 @@ int main()
             addedMatrixAB[i] = 0;
         }
         delete[] addedMatrixAB;
+        addedMatrixAB = 0;
     }
     else
     {
@@ -143,6 +144,7 @@ int main()
         matrixOne[i] = 0;
     }
     delete[] matrixOne;
+    matrixOne = 0;
 
     // Matrix Two
     for (int i = 0; i < rowColSizeArr[1][0]; i++)
@@ -151,13 +153,16 @@ int main()
         matrixTwo[i] = 0;
     }
     delete[] matrixTwo;
+    matrixTwo = 0;
     // Matrix Three
+
     for (int i = 0; i < rowColSizeArr[2][0]; i++)
     {
         delete[] matrixThree[i];
         matrixThree[i] = 0;
     }
     delete[] matrixThree;
+    matrixThree = 0;
 
     // Transpose Matrix A
     for (int i = 0; i < rowColSizeArr[0][0]; i++)
@@ -166,6 +171,7 @@ int main()
         transposeOfA[i] = 0;
     }
     delete[] transposeOfA;
+    transposeOfA = 0;
 
     // Transpose Matrix B
     for (int i = 0; i < rowColSizeArr[1][0]; i++)
@@ -174,6 +180,7 @@ int main()
         transposeOfB[i] = 0;
     }
     delete[] transposeOfB;
+    transposeOfB = 0;
 
     // Transpose Matrix C
     for (int i = 0; i < rowColSizeArr[2][1]; i++)
@@ -182,6 +189,7 @@ int main()
         transposeOfC[i] = 0;
     }
     delete[] transposeOfC;
+    transposeOfC = 0;
 
     // Row Column Size Array
     for (int i = 0; i < matrixRows; i++)
@@ -189,8 +197,8 @@ int main()
         delete[] rowColSizeArr[i];
         rowColSizeArr[i] = 0;
     }
-
     delete[] rowColSizeArr;
+    rowColSizeArr = 0;
 
     return 0;
 }
