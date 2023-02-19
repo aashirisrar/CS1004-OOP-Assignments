@@ -58,6 +58,14 @@ int main()
         int **addedMatrixAB = AddMatrix(matrixOne, matrixTwo, rowColSizeArr[0][0], rowColSizeArr[0][1]);
         cout << "Added Matrix (A+B):" << endl;
         OutputMatrix(addedMatrixAB, rowColSizeArr[0][0], rowColSizeArr[0][1]);
+
+        // Deallocating Added Matrix A+B
+        for (int i = 0; i < rowColSizeArr[0][0]; i++)
+        {
+            delete[] addedMatrixAB[i];
+            addedMatrixAB[i] = 0;
+        }
+        delete[] addedMatrixAB;
     }
     else
     {
@@ -150,21 +158,6 @@ int main()
         matrixThree[i] = 0;
     }
     delete[] matrixThree;
-    // // Added Matrix A+B
-    // for (int i = 0; i < rowColSizeArr[0][0]; i++)
-    // {
-    //     delete[] addedMatrixAB[i];
-    //     addedMatrixAB[i] = 0;
-    // }
-    // delete[] addedMatrixAB;
-
-    // // Added Matrix A+C
-    // for (int i = 0; i < rowColSizeArr[1][0]; i++)
-    // {
-    //     delete[] addedMatrixAC[i];
-    //     addedMatrixAC[i] = 0;
-    // }
-    // delete[] addedMatrixAC;
 
     // Transpose Matrix A
     for (int i = 0; i < rowColSizeArr[0][0]; i++)
@@ -368,7 +361,7 @@ void InterchangeRows(int **matrix, const int &ROWS, const int &COLS)
     cin >> row2;
     row2--;
 
-    if (row1 > 0 && row2 < ROWS)
+    if (row1 >= 0 && row2 < ROWS)
     {
         InterchangeRows(matrix[row1], matrix[row2]);
     }
