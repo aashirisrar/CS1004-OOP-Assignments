@@ -124,6 +124,81 @@ int main()
     cout << "After interchanging matrix A: " << endl;
     OutputMatrix(matrixOne, rowColSizeArr[0][0], rowColSizeArr[0][1]);
 
+    /* CLOSING FILE */
+    inputFile.close();
+
+    /* DEALLOCATION */
+    // Matrix One
+    for (int i = 0; i < rowColSizeArr[0][0]; i++)
+    {
+        delete[] matrixOne[i];
+        matrixOne[i] = 0;
+    }
+    delete[] matrixOne;
+
+    // Matrix Two
+    for (int i = 0; i < rowColSizeArr[1][0]; i++)
+    {
+        delete[] matrixTwo[i];
+        matrixTwo[i] = 0;
+    }
+    delete[] matrixTwo;
+    // Matrix Three
+    for (int i = 0; i < rowColSizeArr[2][0]; i++)
+    {
+        delete[] matrixThree[i];
+        matrixThree[i] = 0;
+    }
+    delete[] matrixThree;
+    // // Added Matrix A+B
+    // for (int i = 0; i < rowColSizeArr[0][0]; i++)
+    // {
+    //     delete[] addedMatrixAB[i];
+    //     addedMatrixAB[i] = 0;
+    // }
+    // delete[] addedMatrixAB;
+
+    // // Added Matrix A+C
+    // for (int i = 0; i < rowColSizeArr[1][0]; i++)
+    // {
+    //     delete[] addedMatrixAC[i];
+    //     addedMatrixAC[i] = 0;
+    // }
+    // delete[] addedMatrixAC;
+
+    // Transpose Matrix A
+    for (int i = 0; i < rowColSizeArr[0][0]; i++)
+    {
+        delete[] transposeOfA[i];
+        transposeOfA[i] = 0;
+    }
+    delete[] transposeOfA;
+
+    // Transpose Matrix B
+    for (int i = 0; i < rowColSizeArr[1][0]; i++)
+    {
+        delete[] transposeOfB[i];
+        transposeOfB[i] = 0;
+    }
+    delete[] transposeOfB;
+
+    // Transpose Matrix C
+    for (int i = 0; i < rowColSizeArr[2][1]; i++)
+    {
+        delete[] transposeOfC[i];
+        transposeOfC[i] = 0;
+    }
+    delete[] transposeOfC;
+
+    // Row Column Size Array
+    for (int i = 0; i < matrixRows; i++)
+    {
+        delete[] rowColSizeArr[i];
+        rowColSizeArr[i] = 0;
+    }
+
+    delete[] rowColSizeArr;
+
     return 0;
 }
 
