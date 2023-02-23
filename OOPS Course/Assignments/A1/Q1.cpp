@@ -265,7 +265,6 @@ void OutputMatrix(int **matrix, const int &ROWS, const int &COLS)
         int *ptr = *(matrix + i);
         for (int j = 0; j < COLS; j++)
         {
-            // cout << matrix[i][j] << " ";
             cout << *ptr << " ";
             ptr++;
         }
@@ -286,12 +285,14 @@ int **AddMatrix(int **matrixA, int **matrixB, const int &ROWS, const int &COLS)
     {
         int *ptr1 = *(matrixA + i);
         int *ptr2 = *(matrixB + i);
+        int *ptr3 = *(addedMatrix + i);
+
         for (int j = 0; j < COLS; j++)
         {
-            // addedMatrix[i][j] = matrixA[i][j] + matrixB[i][j];
-            *(*(addedMatrix + i) + j) = *ptr1 + *ptr2;
+            *ptr3 = *ptr1 + *ptr2;
             ptr1++;
             ptr2++;
+            ptr3++;
         }
     }
     return addedMatrix;
