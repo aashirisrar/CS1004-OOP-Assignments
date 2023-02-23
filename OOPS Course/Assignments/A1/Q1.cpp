@@ -205,7 +205,7 @@ int main()
 
 int **InputMatrix(ifstream &fin, int &rows, int &cols)
 {
-    int **inputArr = 0;
+    int **inputArr = nullptr;
     char arr[100] = {};
     while (!fin.eof())
     {
@@ -262,9 +262,12 @@ void OutputMatrix(int **matrix, const int &ROWS, const int &COLS)
 {
     for (int i = 0; i < ROWS; i++)
     {
+        int *ptr = *(matrix + i);
         for (int j = 0; j < COLS; j++)
         {
-            cout << matrix[i][j] << " ";
+            // cout << matrix[i][j] << " ";
+            cout << *ptr << " ";
+            ptr++;
         }
         cout << endl;
     }
@@ -281,9 +284,14 @@ int **AddMatrix(int **matrixA, int **matrixB, const int &ROWS, const int &COLS)
 
     for (int i = 0; i < ROWS; i++)
     {
+        int *ptr1 = *(matrixA + i);
+        int *ptr2 = *(matrixB + i);
         for (int j = 0; j < COLS; j++)
         {
-            addedMatrix[i][j] = matrixA[i][j] + matrixB[i][j];
+            // addedMatrix[i][j] = matrixA[i][j] + matrixB[i][j];
+            *(*(addedMatrix + i) + j) = *ptr1 + *ptr2;
+            ptr1++;
+            ptr2++;
         }
     }
     return addedMatrix;
