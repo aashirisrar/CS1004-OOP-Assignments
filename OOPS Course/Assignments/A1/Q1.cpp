@@ -32,7 +32,7 @@ int main()
     rowColSizeArr[0][0] = rows;
     rowColSizeArr[0][1] = cols;
 
-    cout << "Matrix One:" << endl;
+    cout << "Matrix A =" << endl;
     OutputMatrix(matrixOne, rowColSizeArr[0][0], rowColSizeArr[0][1]);
 
     // Matrix Two Input
@@ -40,7 +40,7 @@ int main()
     rowColSizeArr[1][0] = rows;
     rowColSizeArr[1][1] = cols;
 
-    cout << "Matrix Two:" << endl;
+    cout << "Matrix B =" << endl;
     OutputMatrix(matrixTwo, rowColSizeArr[1][0], rowColSizeArr[1][1]);
 
     // Matrix Three Input
@@ -48,7 +48,7 @@ int main()
     rowColSizeArr[2][0] = rows;
     rowColSizeArr[2][1] = cols;
 
-    cout << "Matrix Three:" << endl;
+    cout << "Matrix C =" << endl;
     OutputMatrix(matrixThree, rowColSizeArr[2][0], rowColSizeArr[2][1]);
 
     /* Adding Matrices */
@@ -56,7 +56,7 @@ int main()
     if (rowColSizeArr[0][0] == rowColSizeArr[1][0] && rowColSizeArr[0][1] == rowColSizeArr[1][1])
     {
         int **addedMatrixAB = AddMatrix(matrixOne, matrixTwo, rowColSizeArr[0][0], rowColSizeArr[0][1]);
-        cout << "Added Matrix (A+B):" << endl;
+        cout << "A+B =" << endl;
         OutputMatrix(addedMatrixAB, rowColSizeArr[0][0], rowColSizeArr[0][1]);
 
         // Deallocating Added Matrix A+B
@@ -70,36 +70,35 @@ int main()
     }
     else
     {
-        cout << "Addition is not possible!";
+        cout << "Addition is not possible." << endl;
     }
 
     // A+C
     if (rowColSizeArr[0][0] == rowColSizeArr[2][0] && rowColSizeArr[1][1] == rowColSizeArr[2][1])
     {
         int **addedMatrixAC = AddMatrix(matrixOne, matrixTwo, rowColSizeArr[0][0], rowColSizeArr[0][1]);
-        cout << "Added Matrix (A+C):" << endl;
+        cout << "A+C = " << endl;
         OutputMatrix(addedMatrixAC, rowColSizeArr[2][0], rowColSizeArr[2][1]);
     }
     else
     {
         cout << "A+C= " << endl;
-        cout << "Addition is not possible" << endl;
+        cout << "Addition is not possible." << endl
+             << endl;
     }
 
     /* Transpose of Matrix */
     // A
     int **transposeOfA = TransposeMatrix(matrixOne, rowColSizeArr[0][0], rowColSizeArr[0][1]);
-    cout << "Transpose of A:" << endl;
+    cout << "Transpose of A =" << endl;
     OutputMatrix(transposeOfA, rowColSizeArr[0][0], rowColSizeArr[0][1]);
 
     // B
     int **transposeOfB = TransposeMatrix(matrixTwo, rowColSizeArr[1][0], rowColSizeArr[1][1]);
-    cout << "Transpose of B:" << endl;
-    OutputMatrix(transposeOfB, rowColSizeArr[1][0], rowColSizeArr[1][1]);
 
     // C
     int **transposeOfC = TransposeMatrix(matrixThree, rowColSizeArr[2][0], rowColSizeArr[2][1]);
-    cout << "Transpose of C:" << endl;
+    cout << "Transpose of C =" << endl;
     OutputMatrix(transposeOfC, rowColSizeArr[2][1], rowColSizeArr[2][0]);
 
     /* SYMMETRIC */
@@ -107,30 +106,30 @@ int main()
     bool isSymmetricA = IsSymmetric(transposeOfA, rowColSizeArr[0][0], rowColSizeArr[0][1]);
     if (isSymmetricA)
     {
-        cout << "Matrix A is symmetric" << endl;
+        cout << "Matrix A is Symmetric" << endl;
     }
     else
     {
-        cout << "Matrix A is NOT symmetric" << endl;
+        cout << "Matrix A is NOT Symmetric" << endl;
     }
 
     // B
     bool isSymmetricB = IsSymmetric(transposeOfB, rowColSizeArr[1][0], rowColSizeArr[1][1]);
     if (isSymmetricB)
     {
-        cout << "Matrix B is symmetric" << endl;
+        cout << "Matrix B is Symmetric" << endl
+             << endl;
     }
     else
     {
-        cout << "Matrix B is NOT symmetric" << endl;
+        cout << "Matrix B is NOT Symmetric" << endl
+             << endl;
     }
 
-    // C
-    cout << "Matrix C is NOT symmetric as its row and column sizes are not same!" << endl;
-
     /* Interchanging Rows */
+    cout << "Interchanging Rows of Matrix A:" << endl;
     InterchangeRows(matrixOne, rowColSizeArr[0][0], rowColSizeArr[0][1]);
-    cout << "After interchanging matrix A: " << endl;
+    cout << "After Interchanging Rows Matrix A = " << endl;
     OutputMatrix(matrixOne, rowColSizeArr[0][0], rowColSizeArr[0][1]);
 
     /* CLOSING FILE */
@@ -154,8 +153,8 @@ int main()
     }
     delete[] matrixTwo;
     matrixTwo = 0;
-    // Matrix Three
 
+    // Matrix Three
     for (int i = 0; i < rowColSizeArr[2][0]; i++)
     {
         delete[] matrixThree[i];
@@ -228,9 +227,11 @@ int **InputMatrix(ifstream &fin, int &rows, int &cols)
             {
                 fin.getline(arr, 100);
                 k = 0;
+
+                int *ptr = *(inputArr + i);
                 for (int j = 0; j < cols; j++)
                 {
-                    inputArr[i][j] = arr[k] - 48;
+                    *ptr = *(arr + k) - 48;
 
                     if (arr[k + 1] == ' ' || arr[k + 1] == '\000')
                     {
@@ -243,13 +244,15 @@ int **InputMatrix(ifstream &fin, int &rows, int &cols)
 
                         for (int l = k; arr[l] != ' ' && arr[l] != '\000'; l++)
                         {
-                            int temp = arr[l] - 48;
+                            int temp = *(arr + l) - 48;
                             num = (num * 10) + temp;
                             count++;
                         }
-                        inputArr[i][j] = num;
+                        *ptr = num;
                         k += count;
                     }
+
+                    ptr++;
                 }
             }
             return inputArr;
@@ -265,7 +268,7 @@ void OutputMatrix(int **matrix, const int &ROWS, const int &COLS)
         int *ptr = *(matrix + i);
         for (int j = 0; j < COLS; j++)
         {
-            cout << *ptr << " ";
+            cout << *ptr << "\t";
             ptr++;
         }
         cout << endl;
@@ -369,15 +372,14 @@ bool IsSymmetric(int **matrix, const int &ROWS, const int &COLS)
 
 void InterchangeRows(int **matrix, const int &ROWS, const int &COLS)
 {
-    int row1;
-    int row2;
+    int row1 = 1;
+    int row2 = 3;
 
-    cout << "row1: ";
-    cin >> row1;
+    cout << "row1: 1" << endl;
     row1--;
 
-    cout << "row2: ";
-    cin >> row2;
+    cout << "row2: 2" << endl
+         << endl;
     row2--;
 
     if (row1 >= 0 && row2 < ROWS)
