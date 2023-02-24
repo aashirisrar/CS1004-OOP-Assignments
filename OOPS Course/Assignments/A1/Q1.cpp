@@ -210,10 +210,10 @@ int **InputMatrix(ifstream &fin, int &rows, int &cols)
     {
         fin.getline(arr, 100);
 
-        if (arr[0] != '/' && arr[0] != '\0')
+        if (*(arr + 0) != '/' && *(arr + 0) != '\0')
         {
-            rows = arr[0] - 48;
-            cols = arr[2] - 48;
+            rows = *(arr + 0) - 48;
+            cols = *(arr + 2) - 48;
 
             inputArr = new int *[rows];
 
@@ -233,7 +233,7 @@ int **InputMatrix(ifstream &fin, int &rows, int &cols)
                 {
                     *ptr = *(arr + k) - 48;
 
-                    if (arr[k + 1] == ' ' || arr[k + 1] == '\000')
+                    if (*(arr + k + 1) == ' ' || *(arr + k + 1) == '\000')
                     {
                         k += 2;
                     }
@@ -242,7 +242,7 @@ int **InputMatrix(ifstream &fin, int &rows, int &cols)
                         int count = 0;
                         int num = 0;
 
-                        for (int l = k; arr[l] != ' ' && arr[l] != '\000'; l++)
+                        for (int l = k; *(arr + l) != ' ' && *(arr + l) != '\000'; l++)
                         {
                             int temp = *(arr + l) - 48;
                             num = (num * 10) + temp;
@@ -315,7 +315,7 @@ int **TransposeMatrix(int **matrix, const int &ROWS, const int &COLS)
         {
             for (int j = 0; j < COLS; j++)
             {
-                transposeMatrix[i][j] = matrix[j][i];
+                *(*(transposeMatrix + i) + j) = *(*(matrix + j) + i);
             }
         }
         return transposeMatrix;
@@ -332,7 +332,7 @@ int **TransposeMatrix(int **matrix, const int &ROWS, const int &COLS)
         {
             for (int j = 0; j < ROWS; j++)
             {
-                transposeMatrix[i][j] = matrix[j][i];
+                *(*(transposeMatrix + i) + j) = *(*(matrix + j) + i);
             }
         }
         return transposeMatrix;
@@ -355,7 +355,7 @@ bool IsSymmetric(int **matrix, const int &ROWS, const int &COLS)
     {
         for (int j = 0; j < COLS; j++)
         {
-            if (transposeOfTransposeMatrix[i][j] == matrix[i][j])
+            if (*(*(transposeOfTransposeMatrix + i) + j) == *(*(matrix + i) + j))
             {
                 count++;
             }
