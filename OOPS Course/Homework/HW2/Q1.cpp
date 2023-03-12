@@ -52,62 +52,42 @@ public:
         inches = obj.inches;
     }
 
-    // overloaded = operator
+    // overloaded operators
     void operator=(const FeetInches &obj)
     {
         feet = obj.feet;
         inches = obj.inches;
     }
 
-    FeetInches operator+(const FeetInches &obj)
+    FeetInches operator+(const FeetInches &obj) const
     {
-        int total_inches = inches + obj.inches;
-        int total_feet = feet + obj.feet;
-        if (total_inches >= 12)
-        {
-            total_feet += total_inches / 12;
-            total_inches %= 12;
-        }
-        return FeetInches(total_feet, total_inches);
+        FeetInches result(feet + obj.feet, inches + obj.inches);
+        result.simplify();
+        return result;
     }
 
-    FeetInches operator-(const FeetInches &obj)
+    FeetInches operator-(const FeetInches &obj) const
     {
-        int total_inches = inches - obj.inches;
-        int total_feet = feet - obj.feet;
-        if (total_inches < 0)
-        {
-            total_feet -= abs(total_inches) / 12 + 1;
-            total_inches = 12 - abs(total_inches) % 12;
-        }
-        return FeetInches(total_feet, total_inches);
+        FeetInches result(feet - obj.feet, inches - obj.inches);
+        result.simplify();
+        return result;
     }
 
-    FeetInches operator*(const int &num)
+    FeetInches operator*(int n) const
     {
-        int total_inches = inches * num;
-        int total_feet = feet * num;
-        if (total_inches >= 12)
-        {
-            total_feet += total_inches / 12;
-            total_inches %= 12;
-        }
-        return FeetInches(total_feet, total_inches);
+        FeetInches result(feet * n, inches * n);
+        result.simplify();
+        return result;
     }
 
-    FeetInches operator/(const int &num)
+    FeetInches operator/(int n) const
     {
-        int total_inches = inches / num;
-        int total_feet = feet / num;
-        if (inches % num != 0)
-        {
-            total_feet += total_inches / 12;
-            total_inches %= 12;
-        }
-        return FeetInches(total_feet, total_inches);
+        FeetInches result(feet / n, inches / n);
+        result.simplify();
+        return result;
     }
 
-    bool operator>(const FeetInches &obj)
+    bool operator>(const FeetInches &obj) const
     {
         if (feet > obj.feet)
         {
@@ -123,7 +103,7 @@ public:
         }
     }
 
-    bool operator<(const FeetInches &obj)
+    bool operator<(const FeetInches &obj) const
     {
         if (feet < obj.feet)
         {
@@ -139,14 +119,36 @@ public:
         }
     }
 
-    bool operator>=(const FeetInches &obj)
+    bool operator>=(const FeetInches &obj) const
     {
-        return (*this > obj || *this == obj);
+        if (feet > obj.feet)
+        {
+            return true;
+        }
+        else if (feet == obj.feet && inches >= obj.inches)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
-    bool operator<=(const FeetInches &obj)
+    bool operator<=(const FeetInches &obj) const
     {
-        return (*this < obj || *this == obj);
+        if (feet < obj.feet)
+        {
+            return true;
+        }
+        else if (feet == obj.feet && inches <= obj.inches)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     bool operator==(const FeetInches &obj)
