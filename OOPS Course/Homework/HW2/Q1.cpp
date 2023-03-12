@@ -60,28 +60,28 @@ public:
         return result;
     }
 
-    FeetInches operator-(const FeetInches &obj) const
+    FeetInches operator-(const FeetInches &obj)
     {
         FeetInches result(feet - obj.feet, inches - obj.inches);
         result.simplify();
         return result;
     }
 
-    FeetInches operator*(int n) const
+    FeetInches operator*(const FeetInches &obj)
     {
-        FeetInches result(feet * n, inches * n);
+        FeetInches result(feet * obj.feet, inches * obj.inches);
         result.simplify();
         return result;
     }
 
-    FeetInches operator/(int n) const
+    FeetInches operator/(const FeetInches &obj)
     {
-        FeetInches result(feet / n, inches / n);
+        FeetInches result(feet / obj.feet, inches / obj.inches);
         result.simplify();
         return result;
     }
 
-    bool operator>(const FeetInches &obj) const
+    bool operator>(const FeetInches &obj)
     {
         if (feet > obj.feet)
         {
@@ -97,7 +97,7 @@ public:
         }
     }
 
-    bool operator<(const FeetInches &obj) const
+    bool operator<(const FeetInches &obj)
     {
         if (feet < obj.feet)
         {
@@ -113,7 +113,7 @@ public:
         }
     }
 
-    bool operator>=(const FeetInches &obj) const
+    bool operator>=(const FeetInches &obj)
     {
         if (feet > obj.feet)
         {
@@ -129,7 +129,7 @@ public:
         }
     }
 
-    bool operator<=(const FeetInches &obj) const
+    bool operator<=(const FeetInches &obj)
     {
         if (feet < obj.feet)
         {
