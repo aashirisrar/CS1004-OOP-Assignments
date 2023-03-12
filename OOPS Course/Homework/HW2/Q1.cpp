@@ -22,7 +22,13 @@ class FeetInches
         else if (inches < 0)
         {
             feet -= abs(inches) / 12 + 1;
+
             inches = 12 - abs(inches) % 12;
+            if (inches == 12)
+            {
+                inches = 0;
+                feet--;
+            }
         }
     }
 
@@ -53,7 +59,100 @@ public:
         inches = obj.inches;
     }
 
-    // +,-,*,/,>,<,>=,<= operators for the same class.
+    FeetInches operator+(const FeetInches &obj)
+    {
+        int total_inches = inches + obj.inches;
+        int total_feet = feet + obj.feet;
+        if (total_inches >= 12)
+        {
+            total_feet += total_inches / 12;
+            total_inches %= 12;
+        }
+        return FeetInches(total_feet, total_inches);
+    }
+
+    FeetInches operator-(const FeetInches &obj)
+    {
+        int total_inches = inches - obj.inches;
+        int total_feet = feet - obj.feet;
+        if (total_inches < 0)
+        {
+            total_feet -= abs(total_inches) / 12 + 1;
+            total_inches = 12 - abs(total_inches) % 12;
+        }
+        return FeetInches(total_feet, total_inches);
+    }
+
+    FeetInches operator*(const int &num)
+    {
+        int total_inches = inches * num;
+        int total_feet = feet * num;
+        if (total_inches >= 12)
+        {
+            total_feet += total_inches / 12;
+            total_inches %= 12;
+        }
+        return FeetInches(total_feet, total_inches);
+    }
+
+    FeetInches operator/(const int &num)
+    {
+        int total_inches = inches / num;
+        int total_feet = feet / num;
+        if (inches % num != 0)
+        {
+            total_feet += total_inches / 12;
+            total_inches %= 12;
+        }
+        return FeetInches(total_feet, total_inches);
+    }
+
+    bool operator>(const FeetInches &obj)
+    {
+        if (feet > obj.feet)
+        {
+            return true;
+        }
+        else if (feet == obj.feet && inches > obj.inches)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    bool operator<(const FeetInches &obj)
+    {
+        if (feet < obj.feet)
+        {
+            return true;
+        }
+        else if (feet == obj.feet && inches < obj.inches)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    bool operator>=(const FeetInches &obj)
+    {
+        return (*this > obj || *this == obj);
+    }
+
+    bool operator<=(const FeetInches &obj)
+    {
+        return (*this < obj || *this == obj);
+    }
+
+    bool operator==(const FeetInches &obj)
+    {
+        return (feet == obj.feet) && (inches == obj.inches);
+    }
 
     // mutator function - setters
     void feetSetter(int f)
