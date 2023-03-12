@@ -15,13 +15,17 @@ class FeetInches
         }
         else if (inches < 0)
         {
-            feet -= abs(inches) / 12 + 1;
+            feet -= 1 + abs(inches) / 12;
 
-            inches = 12 - abs(inches) % 12;
+            if (inches < 0)
+                inches = 12 - abs(inches) % 12;
+            else
+                inches = abs(inches) % 12;
+
             if (inches == 12)
             {
                 inches = 0;
-                feet--;
+                feet++;
             }
         }
     }
