@@ -6,12 +6,6 @@ class FeetInches
     int feet;
     int inches;
 
-    /* this function checks for values in the inches memeber
-    greater than twelve or lesss than zero. If such a a value
-    is found, the numbers in feet and inches are adjusted to
-    conform to a standard feet and inches expression.
-    for example, 3 feet 14 inches would be adjusted to 4 feet 2 inches
-    and 5 feet 2 inches would be adjusted to 4 feet and 10 inches.*/
     void simplify()
     {
         if (inches >= 12)
@@ -33,10 +27,6 @@ class FeetInches
     }
 
 public:
-    // constructor
-    //  write copy constructor if there is need
-    // overload assignment operator, if there is need
-
     // default constructor
     FeetInches(int f = 0, int i = 0)
     {
