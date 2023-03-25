@@ -9,7 +9,9 @@ private:
     char *str;
     int length; // including the null char here
     // Add GetStringFromBuffer as private member (helper)
+    void GetStringFromBuffer();
     // Add Concatenate as private member (helper)
+    void Concatenate();
     // You can add your class members here
 public:
     //-------------DO_NOT_CHANGE REGION starts below---------------------
@@ -18,29 +20,18 @@ public:
     MyString &operator=(const MyString &);
     bool operator<(MyString); // Comparison on the basis of ascii values
     //-------------End of DO_NOT_CHANGE REGION---------------------
-    // Add your class members here
-    // MyString()
-    // {
-    //     length = 1;
-    //     str = new char[length];
-    //     str[0] = '\0';
-    // }
-
     MyString(int length = 1)
     {
         this->length = length;
         str = new char[length];
-        str[0] = '\n';
+        str[0] = '\0';
     }
 
     MyString(const MyString &obj)
     {
         length = obj.length;
-
-        for (int i = 0; i < length; i++)
-        {
-            this->str[i] = str[i];
-        }
+        str = new char[length];
+        strcpy(str, obj.str);
     }
 
     friend ostream &operator<<(ostream &strm, const MyString &obj)
@@ -67,47 +58,37 @@ public:
     {
         return str[n];
     }
+
+    // // destructor
+    // ~MyString()
+    // {
+    //     delete[] str;
+    // }
 };
 //--------------------------Add your code here----------------------
 MyString MyString::operator+(const MyString obj)
 {
     MyString result(obj.length + length);
-
-    for (int i = 0; i < obj.length + length; i++)
-    {
-        result.str[i] = obj.str[i] + str[i];
-    }
-
+    strcpy(result.str, str);
+    strcat(result.str, obj.str);
     return result;
 }
 
 MyString &MyString::operator=(const MyString &obj)
 {
-    length = obj.length;
-
-    for (int i = 0; i < length; i++)
+    if (str != obj.str)
     {
-        str[i] = obj.str[i];
+        length = obj.length;
+        delete[] str;
+        str = new char[length];
+        strcpy(str, obj.str);
     }
-
     return *this;
 }
 
 bool MyString::operator<(MyString obj)
 {
-    if (this->length > obj.length)
-    {
-        if (strcmp(this->str, str))
-        {
-            return 1;
-        }
-    }
-    else
-    {
-        return 0;
-    }
-
-    return 0;
+    return strcmp(str, obj.str);
 }
 
 //-------------DO_NOT_CHANGE REGION starts below---------------------
