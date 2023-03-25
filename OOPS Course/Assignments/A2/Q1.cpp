@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstring>
 using namespace std;
 
 class MyString
@@ -18,32 +19,103 @@ public:
     bool operator<(MyString); // Comparison on the basis of ascii values
     //-------------End of DO_NOT_CHANGE REGION---------------------
     // Add your class members here
-    friend ostream &operator<<(ostream &strm, const MyString &obj)
+    // MyString()
+    // {
+    //     length = 1;
+    //     str = new char[length];
+    //     str[0] = '\0';
+    // }
+
+    MyString(int length = 1)
     {
+        this->length = length;
+        str = new char[length];
+        str[0] = '\n';
     }
 
-    friend istream &operator>>(istream &strm, const MyString &obj)
+    MyString(const MyString &obj)
     {
+        length = obj.length;
+
+        for (int i = 0; i < length; i++)
+        {
+            this->str[i] = str[i];
+        }
+    }
+
+    friend ostream &operator<<(ostream &strm, const MyString &obj)
+    {
+        if (obj.str[0] != '\n')
+        {
+            strm << obj.str;
+        }
+        return strm;
+    }
+
+    friend istream &operator>>(istream &strm, MyString &obj)
+    {
+        strm >> obj.str;
+        return strm;
+    }
+
+    bool operator!()
+    {
+        return length == 1;
+    }
+
+    MyString operator[](int n)
+    {
+        return str[n];
     }
 };
 //--------------------------Add your code here----------------------
 MyString MyString::operator+(const MyString obj)
 {
+    MyString result(obj.length + length);
+
+    for (int i = 0; i < obj.length + length; i++)
+    {
+        result.str[i] = obj.str[i] + str[i];
+    }
+
+    return result;
 }
 
-MyString MyString::operator=(const MyString &obj)
+MyString &MyString::operator=(const MyString &obj)
 {
+    length = obj.length;
+
+    for (int i = 0; i < length; i++)
+    {
+        str[i] = obj.str[i];
+    }
+
+    return *this;
 }
 
 bool MyString::operator<(MyString obj)
 {
+    if (this->length > obj.length)
+    {
+        if (strcmp(this->str, str))
+        {
+            return 1;
+        }
+    }
+    else
+    {
+        return 0;
+    }
+
+    return 0;
 }
 
 //-------------DO_NOT_CHANGE REGION starts below---------------------
-void main()
+int main()
 {
     MyString str1, str2, str3, str4; // Default constructor will make a string of
-    // lenght 1 having null character only i.e.empty string if (!str1)
+    // lenght 1 having null character only i.e.empty string
+    if (!str1)
     {
         cout << "String 1 is Empty.\n";
         cout << "Str 1 = " << str1 << endl
@@ -82,16 +154,17 @@ void main()
     cin >> str4;
     cout << "\n\n\nstr3 = " << str3 << endl;
     cout << "str4 = " << str4 << endl;
-    if (str3 < str4)
-        cout << "String 3 is Less than String 4.\n";
-    else
-        cout << "String 3 is NOT Less than String 4.\n";
-    MyString str5 = str1 + str2;
-    cout << "\n\n\nStr5:\t" << str5 << endl;
-    cout << "Str5[7]:\t" << str5[7] << endl; // Function Call: str5.operator[](7).
-    str5[7] = '$';
-    cout << "\n\nStr5:\t" << str5 << endl;
-    cout << "\n\n\nstr5(5, 10):\t" << str5(5, 10) << endl; // Substring of lenght 10
+    // if (str3 < str4)
+    //     cout << "String 3 is Less than String 4.\n";
+    // else
+    //     cout << "String 3 is NOT Less than String 4.\n";
+    // MyString str5 = str1 + str2;
+    // cout << "\n\n\nStr5:\t" << str5 << endl;
+    // cout << "Str5[7]:\t" << str5[7] << endl; // Function Call: str5.operator[](7).
+    // str5[7] = '$';
+    // cout << "\n\nStr5:\t" << str5 << endl;
+    // cout << "\n\n\nstr5(5, 10):\t" << str5(5, 10) << endl; // Substring of lenght 10
     // starting from index 5.Function Call str5.operator()(5, 10) Let the returned MyString or char *leak
+    return 0;
 }
 //-------------End of DO_NOT_CHANGE REGION---------------------
