@@ -108,8 +108,7 @@ MyString &MyString::operator=(const MyString &obj)
 
 bool MyString::operator<(MyString obj)
 {
-    // correct this function
-    return strcmp(str, obj.str);
+    return strcmp(str, obj.str) < 0;
 }
 
 //-------------DO_NOT_CHANGE REGION starts below---------------------
