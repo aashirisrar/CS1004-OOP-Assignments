@@ -54,9 +54,29 @@ public:
         return length == 1;
     }
 
-    MyString operator[](int n)
+    MyString(const char *s)
+    {
+        str = new char[strlen(s) + 1];
+        strcpy(str, s);
+    }
+
+    char &operator[](int n)
     {
         return str[n];
+    }
+
+    char *operator()(int start, int size)
+    {
+        char *leak = new char[size];
+
+        int m = 0;
+        for (int i = start; i < start + size; i++)
+        {
+            leak[m++] = str[i];
+        }
+        leak[m] = '\0';
+
+        return leak;
     }
 
     // // destructor
@@ -88,6 +108,7 @@ MyString &MyString::operator=(const MyString &obj)
 
 bool MyString::operator<(MyString obj)
 {
+    // correct this function
     return strcmp(str, obj.str);
 }
 
@@ -135,16 +156,16 @@ int main()
     cin >> str4;
     cout << "\n\n\nstr3 = " << str3 << endl;
     cout << "str4 = " << str4 << endl;
-    // if (str3 < str4)
-    //     cout << "String 3 is Less than String 4.\n";
-    // else
-    //     cout << "String 3 is NOT Less than String 4.\n";
-    // MyString str5 = str1 + str2;
-    // cout << "\n\n\nStr5:\t" << str5 << endl;
-    // cout << "Str5[7]:\t" << str5[7] << endl; // Function Call: str5.operator[](7).
-    // str5[7] = '$';
-    // cout << "\n\nStr5:\t" << str5 << endl;
-    // cout << "\n\n\nstr5(5, 10):\t" << str5(5, 10) << endl; // Substring of lenght 10
+    if (str3 < str4)
+        cout << "String 3 is Less than String 4.\n";
+    else
+        cout << "String 3 is NOT Less than String 4.\n";
+    MyString str5 = str1 + str2;
+    cout << "\n\n\nStr5:\t" << str5 << endl;
+    cout << "Str5[7]:\t" << str5[7] << endl; // Function Call: str5.operator[](7).
+    str5[7] = '$';
+    cout << "\n\nStr5:\t" << str5 << endl;
+    cout << "\n\n\nstr5(5, 10):\t" << str5(5, 10) << endl; // Substring of lenght 10
     // starting from index 5.Function Call str5.operator()(5, 10) Let the returned MyString or char *leak
     return 0;
 }
