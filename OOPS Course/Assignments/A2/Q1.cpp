@@ -1,121 +1,122 @@
 #include <iostream>
 #include <cstring>
+
 using namespace std;
 
 class MyString
 {
-    // You can add your code here
 private:
     char *str;
-    int length; // including the null char here
-    // Add GetStringFromBuffer as private member (helper)
+    int length;
     void GetStringFromBuffer();
-    // Add Concatenate as private member (helper)
     void Concatenate();
-    // You can add your class members here
+
 public:
-    //-------------DO_NOT_CHANGE REGION starts below---------------------
-    // Do not change the prototypes given below
-    MyString operator+(const MyString);
-    MyString &operator=(const MyString &);
-    bool operator<(MyString); // Comparison on the basis of ascii values
-    //-------------End of DO_NOT_CHANGE REGION---------------------
-    MyString(int length = 1)
+    // Default constructor
+    MyString()
     {
-        this->length = length;
+        length = 1;
         str = new char[length];
         str[0] = '\0';
     }
 
+    // Parametrized constructor
+    MyString(const char *s)
+    {
+        length = strlen(s) + 1;
+        str = new char[length];
+        strcpy(str, s);
+    }
+
+    // Copy constructor
     MyString(const MyString &obj)
     {
-        length = obj.length;
+        length = strlen(obj.str) + 1;
         str = new char[length];
         strcpy(str, obj.str);
     }
 
-    friend ostream &operator<<(ostream &strm, const MyString &obj)
+    // Destructor
+    ~MyString()
     {
-        if (obj.str[0] != '\n')
-        {
-            strm << obj.str;
-        }
-        return strm;
+        delete[] str;
     }
 
-    friend istream &operator>>(istream &strm, MyString &obj)
+    MyString operator+(const MyString);
+    MyString &operator=(const MyString &);
+    bool operator<(MyString);
+
+    // Stream insertion operator
+    friend ostream &operator<<(ostream &os, const MyString &obj)
     {
-        strm >> obj.str;
-        return strm;
+        return os << obj.str;
     }
 
+    // Stream extraction operator
+    friend istream &operator>>(istream &is, MyString &obj)
+    {
+        char buffer[1024];
+        is >> buffer;
+        obj = MyString(buffer);
+        return is;
+    }
+
+    // Subscript operator
+    char &operator[](int index)
+    {
+        return str[index];
+    }
+
+    // Substring operator
+    MyString operator()(int start, int len)
+    {
+        char *substr = new char[len + 1];
+        strncpy(substr, str + start, len);
+        substr[len] = '\0';
+        MyString result(substr);
+        delete[] substr;
+        return result;
+    }
+
+    // Empty string check
     bool operator!()
     {
-        return length == 1;
+        return str[0] == '\0';
     }
-
-    MyString(const char *s)
-    {
-        str = new char[strlen(s) + 1];
-        strcpy(str, s);
-    }
-
-    char &operator[](int n)
-    {
-        return str[n];
-    }
-
-    char *operator()(int start, int size)
-    {
-        char *leak = new char[size];
-
-        int m = 0;
-        for (int i = start; i < start + size; i++)
-        {
-            leak[m++] = str[i];
-        }
-        leak[m] = '\0';
-
-        return leak;
-    }
-
-    // // destructor
-    // ~MyString()
-    // {
-    //     delete[] str;
-    // }
 };
-//--------------------------Add your code here----------------------
-MyString MyString::operator+(const MyString obj)
-{
-    MyString result(obj.length + length);
-    strcpy(result.str, str);
-    strcat(result.str, obj.str);
-    return result;
-}
 
+// Assignment operator
 MyString &MyString::operator=(const MyString &obj)
 {
-    if (str != obj.str)
+    if (this != &obj)
     {
-        length = obj.length;
         delete[] str;
-        str = new char[length];
+        str = new char[strlen(obj.str) + 1];
         strcpy(str, obj.str);
     }
     return *this;
 }
 
-bool MyString::operator<(MyString obj)
+// Concatenation operator
+MyString MyString::operator+(const MyString obj)
+{
+    MyString result;
+    delete[] result.str;
+    result.str = new char[strlen(str) + strlen(obj.str) + 1];
+    strcpy(result.str, str);
+    strcat(result.str, obj.str);
+    return result;
+}
+
+// Comparision Operator
+bool MyString::operator<(const MyString obj)
 {
     return strcmp(str, obj.str) < 0;
 }
 
-//-------------DO_NOT_CHANGE REGION starts below---------------------
 int main()
 {
-    MyString str1, str2, str3, str4; // Default constructor will make a string of
-    // lenght 1 having null character only i.e.empty string
+    MyString str1, str2, str3, str4;
     if (!str1)
     {
         cout << "String 1 is Empty.\n";
@@ -132,7 +133,6 @@ int main()
     cout << "String 2 = " << str2 << endl
          << endl
          << endl;
-    // What is following code testing?
     cout << "Before str1 = str1; str1 = " << str1 << endl;
     str1 = str1;
     cout << "After str1 = str1, str1 = " << str1 << endl
@@ -161,11 +161,9 @@ int main()
         cout << "String 3 is NOT Less than String 4.\n";
     MyString str5 = str1 + str2;
     cout << "\n\n\nStr5:\t" << str5 << endl;
-    cout << "Str5[7]:\t" << str5[7] << endl; // Function Call: str5.operator[](7).
+    cout << "Str5[7]:\t" << str5[7] << endl;
     str5[7] = '$';
     cout << "\n\nStr5:\t" << str5 << endl;
-    cout << "\n\n\nstr5(5, 10):\t" << str5(5, 10) << endl; // Substring of lenght 10
-    // starting from index 5.Function Call str5.operator()(5, 10) Let the returned MyString or char *leak
+    cout << "\n\n\nstr5(5, 10):\t" << str5(5, 10) << endl;
     return 0;
 }
-//-------------End of DO_NOT_CHANGE REGION---------------------
