@@ -23,7 +23,7 @@ public:
     {
         length = strlen(s) + 1;
         str = new char[length];
-        strcpy(str, s);
+        StringCopy(str, s);
     }
 
     // Copy constructor
@@ -31,7 +31,7 @@ public:
     {
         length = strlen(obj.str) + 1;
         str = new char[length];
-        strcpy(str, obj.str);
+        StringCopy(str, obj.str);
     }
 
     // Destructor
@@ -70,7 +70,7 @@ public:
     MyString operator()(int start, int len)
     {
         char *substr = new char[len + 1];
-        strncpy(substr, str + start, len);
+        StringNumCopy(substr, str + start, len);
         substr[len] = '\0';
         MyString result(substr);
         delete[] substr;
@@ -82,6 +82,43 @@ public:
     {
         return str[0] == '\0';
     }
+
+    // StringCopy function
+    void StringCopy(char *dest, const char *src)
+    {
+        char *ptr = dest;
+        while (*src != '\0')
+        {
+            *ptr++ = *src++;
+        }
+        *ptr = '\0';
+    }
+
+    // StringNumCopy function
+    void StringNumCopy(char *dest, const char *src, size_t n)
+    {
+        char *ptr = dest;
+        size_t i;
+        for (i = 0; i < n && *src != '\0'; i++)
+        {
+            *ptr++ = *src++;
+        }
+        for (; i < n; i++)
+        {
+            *ptr++ = '\0';
+        }
+    }
+
+    // StringCat function
+    void StringCat(char *dest, const char *src)
+    {
+        char *ptr = dest + strlen(dest);
+        while (*src != '\0')
+        {
+            *ptr++ = *src++;
+        }
+        *ptr = '\0';
+    }
 };
 
 // Assignment operator
@@ -91,7 +128,7 @@ MyString &MyString::operator=(const MyString &obj)
     {
         delete[] str;
         str = new char[strlen(obj.str) + 1];
-        strcpy(str, obj.str);
+        StringCopy(str, obj.str);
     }
     return *this;
 }
@@ -102,8 +139,8 @@ MyString MyString::operator+(const MyString obj)
     MyString result;
     delete[] result.str;
     result.str = new char[strlen(str) + strlen(obj.str) + 1];
-    strcpy(result.str, str);
-    strcat(result.str, obj.str);
+    StringCopy(result.str, str);
+    StringCat(result.str, obj.str);
     return result;
 }
 
