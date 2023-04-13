@@ -8,8 +8,6 @@ class MyString
 private:
     char *str;
     int length;
-    void GetStringFromBuffer();
-    void Concatenate();
 
 public:
     // Default constructor
@@ -40,6 +38,7 @@ public:
     ~MyString()
     {
         delete[] str;
+        str = NULL;
     }
 
     MyString operator+(const MyString);
