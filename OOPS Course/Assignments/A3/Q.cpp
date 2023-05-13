@@ -78,78 +78,57 @@ public:
   {
   }
 
-  bool operator<(const bigint &obj)
+  friend bool operator<(const bigint &a, const bigint &b)
   {
-    if (v[0] < obj.v[0])
-      return 1;
-    else if (v[1] < obj.v[1])
-      return 1;
-    else if (v[2] < obj.v[2])
-      return 1;
-    else if (v[3] < obj.v[3])
-      return 1;
-    else if (v[4] < obj.v[4])
-      return 1;
+    for (int i = 4; i >= 0; i--)
+    {
+      if (a.v[i] != b.v[i])
+      {
+        return a.v[i] < b.v[i];
+      }
+    }
 
     return 0;
   }
 
-  bool operator>(const bigint &obj)
+  friend bool operator>(const bigint &a, const bigint &b)
   {
-    if (v[0] > obj.v[0])
-      return 1;
-    else if (v[1] > obj.v[1])
-      return 1;
-    else if (v[2] > obj.v[2])
-      return 1;
-    else if (v[3] > obj.v[3])
-      return 1;
-    else if (v[4] > obj.v[4])
-      return 1;
+    for (int i = 4; i >= 0; i--)
+    {
+      if (a.v[i] != b.v[i])
+      {
+        return a.v[i] > b.v[i];
+      }
+    }
 
     return 0;
   }
 
-  bool operator<=(const bigint &obj)
+  friend bool operator<=(const bigint &a, const bigint &b)
   {
-    if (v[0] <= obj.v[0])
-      return 1;
-    else if (v[1] <= obj.v[1])
-      return 1;
-    else if (v[2] <= obj.v[2])
-      return 1;
-    else if (v[3] <= obj.v[3])
-      return 1;
-    else if (v[4] <= obj.v[4])
-      return 1;
-
-    return 0;
+    return !(a > b);
   }
 
-  bool operator>=(const bigint &obj)
+  friend bool operator>=(const bigint &a, const bigint &b)
   {
-    if (v[0] >= obj.v[0])
-      return 1;
-    else if (v[1] >= obj.v[1])
-      return 1;
-    else if (v[2] >= obj.v[2])
-      return 1;
-    else if (v[3] >= obj.v[3])
-      return 1;
-    else if (v[4] >= obj.v[4])
-      return 1;
-
-    return 0;
+    return !(a < b);
   }
 
-  bool operator==(const bigint &obj)
+  friend bool operator==(const bigint &a, const bigint &b)
   {
-    return v[0] == obj.v[0] && v[1] == obj.v[1] && v[2] == obj.v[2] && v[3] == obj.v[3] && v[4] == obj.v[4];
+    for (int i = 0; i < 5; i++)
+    {
+      if (a.v[i] != b.v[i])
+      {
+        return 0;
+      }
+    }
+    return 1;
   }
 
-  bool operator!=(const bigint &obj)
+  friend bool operator!=(const bigint &a, const bigint &b)
   {
-    return v[0] != obj.v[0] || v[1] != obj.v[1] || v[2] != obj.v[2] || v[3] != obj.v[3] || v[4] != obj.v[4];
+    return !(a == b);
   }
 };
 
