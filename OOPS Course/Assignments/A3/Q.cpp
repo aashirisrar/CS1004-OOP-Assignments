@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <math.h>
 using namespace std;
 
@@ -58,50 +59,108 @@ public:
   }
 
   // functions
-  friend istream &operator>>(istream &strm, const bigint &obj)
+  friend istream &operator>>(istream &is, bigint &num)
   {
-    return strm;
+    string s;
+    is >> s;
+
+    int i = 0;
+    for (int j = s.length() - 1; j >= 0; j -= 9)
+    {
+      int digits = 0;
+      for (int k = max(0, j - 8); k <= j; ++k)
+      {
+        digits = digits * 10 + (s[k] - '0');
+      }
+      num.v[i++] = digits;
+    }
+
+    for (int j = i; j < 5; ++j)
+    {
+      num.v[j] = 0;
+    }
+
+    return is;
   }
 
-  friend ostream &operator<<(ostream &strm, const bigint &obj)
+  friend ostream &operator<<(ostream &os, const bigint &num)
   {
-    strm << obj.v[4] << "," << obj.v[3] << "," << obj.v[2] << "," << obj.v[1] << "," << obj.v[0];
+    int i = 4;
+    while (i >= 0 && num.v[i] == 0)
+    {
+      --i;
+    }
 
-    return strm;
+    if (i < 0)
+    {
+      os << "0";
+      return os;
+    }
+
+    os << num.v[i];
+    for (--i; i >= 0; --i)
+    {
+      os << setfill('0') << setw(9) << num.v[i];
+    }
+
+    return os;
   }
 
-  void operator+(const bigint &obj)
+  friend bigint operator+(const bigint &a, const bigint &b)
   {
+    bigint result;
+    int carry = 0;
+    for (int i = 0; i < 5; ++i)
+    {
+      result.v[i] = a.v[i] + b.v[i] + carry;
+      carry = result.v[i] / 1000000000;
+      result.v[i] %= 1000000000;
+    }
+    return result;
   }
 
-  void operator-(const bigint &obj)
+  friend bigint operator-(const bigint &a, const bigint &b)
   {
+    bigint result;
+    int carry = 0;
+    for (int i = 0; i < 5; ++i)
+    {
+      result.v[i] = a.v[i] - b.v[i] - carry;
+      if (result.v[i] < 0)
+      {
+        result.v[i] += 1000000000;
+        carry = 1;
+      }
+      else
+      {
+        carry = 0;
+      }
+    }
+    return result;
   }
 
   friend bool operator<(const bigint &a, const bigint &b)
   {
-    for (int i = 4; i >= 0; i--)
+    for (int i = 4; i >= 0; --i)
     {
       if (a.v[i] != b.v[i])
       {
         return a.v[i] < b.v[i];
       }
     }
-
-    return 0;
+    return false;
   }
 
   friend bool operator>(const bigint &a, const bigint &b)
   {
-    for (int i = 4; i >= 0; i--)
+    for (int i = 4; i >= 0; --i)
     {
       if (a.v[i] != b.v[i])
       {
         return a.v[i] > b.v[i];
       }
     }
-
-    return 0;
+    return false;
   }
 
   friend bool operator<=(const bigint &a, const bigint &b)
@@ -116,14 +175,14 @@ public:
 
   friend bool operator==(const bigint &a, const bigint &b)
   {
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 5; ++i)
     {
       if (a.v[i] != b.v[i])
       {
-        return 0;
+        return false;
       }
     }
-    return 1;
+    return true;
   }
 
   friend bool operator!=(const bigint &a, const bigint &b)
@@ -198,26 +257,26 @@ int main()
   if (x3 <= y3)
     cout << x3 << " is smaller than or equal to " << y3 << "." << endl;
 
-  // bigint x4(999999999, 999999999, 999999999, 20);
+  bigint x4(999999999, 999999999, 999999999, 20);
 
-  // cout << x4 << "+1 = " << x4 + 1 << endl;
+  cout << x4 << "+1 = " << x4 + 1 << endl;
 
-  // bigint y4(000000000, 000000000, 000000000, 000000000, 0000000001);
+  bigint y4(000000000, 000000000, 000000000, 000000000, 0000000001);
 
-  // cout << y4 << "-1 = " << y4 - 1 << endl;
+  cout << y4 << "-1 = " << y4 - 1 << endl;
 
-  // cout << x1 + x2 + x3 + x4 - y3 + 1 << endl;
+  cout << x1 + x2 + x3 + x4 - y3 + 1 << endl;
 
-  // for (int i = 0; i < 3; i++)
-  // {
-  //   bigint x5, y5;
-  //   cin >> x5 >> y5;
-  //   cout << "x = " << x5 << endl;
-  //   cout << "y = " << y5 << endl;
+  for (int i = 0; i < 3; i++)
+  {
+    bigint x5, y5;
+    cin >> x5 >> y5;
+    cout << "x = " << x5 << endl;
+    cout << "y = " << y5 << endl;
 
-  //   cout << "x+y=" << x5 + y5 << endl;
-  //   cout << "x-y=" << x5 - y5 << endl;
-  // }
+    cout << "x+y=" << x5 + y5 << endl;
+    cout << "x-y=" << x5 - y5 << endl;
+  }
 
   return 0;
 }
